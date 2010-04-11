@@ -6,6 +6,7 @@ class Fftw <Formula
   @md5='b616e5c91218cc778b5aa735fefb61ae'
 
   def install
+    # single precision
     system "./configure", "--enable-shared",
                           "--disable-debug",
                           "--prefix=#{prefix}",
@@ -14,6 +15,20 @@ class Fftw <Formula
                           "--enable-sse",
                           "--disable-dependency-tracking",
                           "--disable-fortran"
+    system "make install"
+
+    # clean up so we can compile the double precision variant
+    system "make clean"
+
+    # double precision
+    system "./configure", "--enable-shared",
+                          "--disable-debug",
+                          "--prefix=#{prefix}",
+                          "--enable-threads",
+                          "--enable-sse2",
+                          "--disable-dependency-tracking",
+                          "--disable-fortran"
+
     system "make install"
 
     #wtf file?
