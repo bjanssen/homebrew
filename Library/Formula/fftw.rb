@@ -7,6 +7,7 @@ class Fftw <Formula
 
   def install
     # single precision
+    # enable-sse only works with single
     system "./configure", "--enable-shared",
                           "--disable-debug",
                           "--prefix=#{prefix}",
@@ -21,11 +22,27 @@ class Fftw <Formula
     system "make clean"
 
     # double precision
+    # enable-sse2 only works with double precision (default)
     system "./configure", "--enable-shared",
                           "--disable-debug",
                           "--prefix=#{prefix}",
                           "--enable-threads",
                           "--enable-sse2",
+                          "--disable-dependency-tracking",
+                          "--disable-fortran"
+
+    system "make install"
+
+    # clean up so we can compile the long-double precision variant
+    system "make clean"
+
+    # long-double precision
+    # no SIMD optimization available 
+    system "./configure", "--enable-shared",
+                          "--disable-debug",
+                          "--prefix=#{prefix}",
+                          "--enable-threads",
+                          "--enable-long-double",
                           "--disable-dependency-tracking",
                           "--disable-fortran"
 
