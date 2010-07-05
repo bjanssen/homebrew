@@ -1,7 +1,8 @@
 require 'formula'
 
 class Ffmpeg <Formula
-  head 'svn://svn.ffmpeg.org/ffmpeg/trunk', :revision => 22585
+  head 'svn://svn.ffmpeg.org/ffmpeg/trunk',
+    :revisions => { :trunk => 22916, 'libswscale' => 31045 }
   homepage 'http://ffmpeg.org/'
 
   depends_on 'x264' => :optional
@@ -23,6 +24,12 @@ class Ffmpeg <Formula
     configure_flags << "--enable-libfaac" if Formula.factory('faac').installed?
     configure_flags << "--enable-libfaad" if Formula.factory('faad2').installed?
     configure_flags << "--enable-libmp3lame" if Formula.factory('lame').installed?
+
+    # For 32-bit compilation under gcc 4.2, see:
+    # http://trac.macports.org/ticket/20938#comment:22
+    if MACOS_VERSION >= 10.6 and not Hardware.is_64_bit?
+      ENV.append_to_cflags "-mdynamic-no-pic"
+    end
 
     system "./configure", *configure_flags
 

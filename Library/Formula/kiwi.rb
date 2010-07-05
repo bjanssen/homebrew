@@ -1,9 +1,9 @@
 require 'formula'
 
 class Kiwi <Formula
-  url 'http://github.com/visionmedia/kiwi/tarball/0.2.3'
+  url 'http://github.com/visionmedia/kiwi/tarball/0.3.1'
   homepage 'http://github.com/visionmedia/kiwi'
-  md5 'a6ad119593d5817730f57f5aa53e73cf'
+  md5 '2ae655e5dc3861f3852d7592b7ab9533'
 
   depends_on 'rlwrap' => :recommended
 
